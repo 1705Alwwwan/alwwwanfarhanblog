@@ -1,0 +1,86 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "Portfolio enterprise projects created and managed by the administrator.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "during": { "type": "string", "maxLength": 100 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "skill_set": { "type": "string", "maxLength": 500 },
+        "type": { "type": "string", "enum": ["image", "video"] },
+        "media_url": { "type": "string", "maxLength": 500 },
+        "project_for": { "type": "string", "maxLength": 200 },
+        "category": { "type": "string", "maxLength": 100 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "createdBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["title", "description", "type", "media_url", "project_for"]
+    },
+    "Certificate": {
+      "title": "Certificate",
+      "description": "Professional certifications and verified licenses.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "issuer": { "type": "string", "maxLength": 200 },
+        "date": { "type": "string", "maxLength": 100 },
+        "image": { "type": "string", "maxLength": 500 },
+        "link": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "createdBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["title", "issuer", "date", "image"]
+    },
+    "Article": {
+      "title": "Article",
+      "description": "Technical blog posts and guides published by the admin.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 300 },
+        "slug": { "type": "string", "maxLength": 200 },
+        "excerpt": { "type": "string", "maxLength": 1000 },
+        "content": { "type": "string", "maxLength": 20000 },
+        "category": { "type": "string", "maxLength": 100 },
+        "readTime": { "type": "string", "maxLength": 50 },
+        "coverImage": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "createdBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["title", "excerpt", "content", "category"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "Trusted administrative user accounts with authorization to manage data.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "maxLength": 200 },
+        "role": { "type": "string", "enum": ["admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/projects/{projectId}": {
+      "schema": { "$ref": "#/entities/Project" },
+      "description": "Collection of portfolio projects accessible publicly for viewing and modifiable by admin."
+    },
+    "/certificates/{certificateId}": {
+      "schema": { "$ref": "#/entities/Certificate" },
+      "description": "Collection of certificates accessible publicly for viewing and modifiable by admin."
+    },
+    "/articles/{articleId}": {
+      "schema": { "$ref": "#/entities/Article" },
+      "description": "Collection of articles and technical blogs accessible publicly for viewing and modifiable by admin."
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/Admin" },
+      "description": "Internal document lookup representing trusted administrators."
+    }
+  }
+}
